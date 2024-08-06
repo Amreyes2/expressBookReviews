@@ -23,9 +23,9 @@ public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
 
 
-  const isbn = req.params.isbn;
-    
-    return res.send(books[isbn]);
+  const isbn = req.body.isbn;
+    res.send("hi there");
+       return res.send(books[isbn]);
   //return res.status(300).json({message: "Yet to be implemented"});
  });
   
