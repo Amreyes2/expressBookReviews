@@ -2,10 +2,11 @@ const express = require('express');
 let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
+let authenticatedUser = require("./auth_users.js").authenticated;
 const public_users = express.Router();
 
 
-public_users.post("/register", (req,res) => {
+public_users.post("/register2", (req,res) => {
   //Write your code here
  // return res.send(JSON.stringify(books, null,4));
  const username = req.body.username;
@@ -26,6 +27,29 @@ public_users.post("/register", (req,res) => {
 
 
 });
+public_users.post("/login", (req, res) => {
+const username = req.body.username;
+    const password = req.body.password;
+    // Check if username or password is missing
+    if (!username || !password) {
+        return res.status(404).json({ message: "Error logging in" });
+    }
+    // Authenticate user
+    if (authenticatedUser(username, password)) {
+        // Generate JWT access token
+        let accessToken = jwt.sign({
+            data: password
+        }, 'access', { expiresIn: 60 * 60 });
+        // Store access token and username in session
+        req.session.authorization = {
+            accessToken, username
+        }
+        return res.status(200).send("User successfully logged in");
+    } else {
+        return res.status(208).json({ message: "Invalid Login. Check username and password" });
+    }
+});
+
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
