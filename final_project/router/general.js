@@ -79,34 +79,81 @@ public_users.get('/isbn/:isbn',function (req, res) {
  });
   
 // Get book details based on author
-public_users.get('/author/:author',function (req, res) {
-  //Write your code here
-  const author = req.params.author;
+public_users.get('/author/',function (req, res) {
+ let filter_book = [];
+    let author= req.body.author;
+    //res.send("hello");
+   // console.log(author);
 
-  let filtered_books = books;
-
-   filtered_books.forEach(book => { 
-    
-   });
-
+let contador = 0;
+ for (i = 1; i<11; i++){
   
-  //return res.send(filtered_books[1]);
+      if (books[i].author === author) {
+
+   //   console.log(books[i].author + " author correcto");
+    filter_book[contador] = books[i];
+    contador=contador+1;
+   // console.log(contador);
+      }      
+
+      
+ }
+
+   //console.log(books[2].author);
+   //console.log(filter_book[2].author);
 
 
-  
-  //return res.status(300).json({message: "Yet to be implemented"});
+ return res.send(JSON.stringify(filter_book, null,4));
 });
 
 // Get all books based on title
-public_users.get('/title/:title',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+
+
+
+public_users.get('/title/',function (req, res) {
+   let filter_book = [];
+    let title= req.body.title;
+    //res.send("hello");
+   // console.log(author);
+
+let contador = 0;
+ for (i = 1; i<11; i++){
+  
+      if (books[i].title === title) {
+
+   //   console.log(books[i].author + " author correcto");
+    filter_book[contador] = books[i];
+    contador=contador+1;
+   // console.log(contador);
+      }      
+
+      
+ }
+
+   //console.log(books[2].author);
+   //console.log(filter_book[2].author);
+
+
+ return res.send(JSON.stringify(filter_book, null,4));
 });
+
+
+
+
+
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  
+
+  const isbn = req.params.isbn;
+ 
+  if (parseInt(isbn) >0 || parseInt(isbn) <11){
+        return res.send(books[isbn]);
+  }else {
+      return res.status(300).json({message: "Not found"});
+  }
+      
 });
 
 module.exports.general = public_users;
