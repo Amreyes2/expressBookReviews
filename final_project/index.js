@@ -115,9 +115,12 @@ app.put("/auth/review/:isbn", (req, res) => {
   }
   
     //Write your code here
-    const isbn= req.params.isbn;
-    let  review = req.body.review;
-    return res.status(300).json({message: "Yet to be implemented"});
+     const isbn= req.params.isbn;
+    let  review = req.body.reviews;
+    if ( isbn){
+            books[isbn].reviews= review;
+    }
+    return res.status(300).json(books[isbn]);
   });
  
 const PORT =5000;
