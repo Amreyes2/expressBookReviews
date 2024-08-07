@@ -38,14 +38,27 @@ public_users.get('/list/:author', function(req, res){
     let filter_book = [];
     let author= req.params.author;
     //res.send("hello");
-    console.log(author);
- for (i = 1; i<11; i++){
-    filter_book = books[i];
-      
+   // console.log(author);
 
+let contador = 0;
+ for (i = 1; i<11; i++){
+  
+      if (books[i].author === author) {
+
+      console.log(books[i].author + " author correcto");
+    filter_book[contador] = books[i];
+    contador=contador+1;
+    console.log(contador);
+      }      
+
+      
  }
-   console.log(books[2].author);
- return res.send(author);
+
+   //console.log(books[2].author);
+   //console.log(filter_book[2].author);
+
+
+ return res.send(JSON.stringify(filter_book, null, 4));
 
 });
 
