@@ -45,7 +45,7 @@ public_users.get('/list/:author', function(req, res){
 
  }
    console.log(books[2].author);
-
+ return res.send(author);
 
 });
 
