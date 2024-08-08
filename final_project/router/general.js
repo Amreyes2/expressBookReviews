@@ -3,9 +3,34 @@ let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 let authenticatedUser = require("./auth_users.js").authenticated;
+const axios = require('axios').default;
 const public_users = express.Router();
 
 
+const connectToURL = (url) =>  {
+    const req =  axios.get(url);
+    console.log(req);
+    req.then(resp => {
+        console.log("Fulfilled");
+        console.log(resp.data);
+      req.finally();
+
+       
+    }    
+    ) 
+        .catch(err => {
+            console.log("Rejected for url");
+            console.log (err.toString());
+
+        });
+
+
+}
+
+const getdata = () =>{
+connectToURL("http://localhost:5000/");
+
+}
 public_users.post("/register2", (req,res) => {
   //Write your code here
  // return res.send(JSON.stringify(books, null,4));
@@ -53,16 +78,21 @@ const username = req.body.username;
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
+    getdata();
   //Write your code here
   return  res.send(JSON.stringify(books, null,4));
   //return res.status(300).json({message: "Yet to be implemented"});
+ 
 });
+
 
 public_users.get('/list/:author', function(req, res){
     let filter_book = [];
     let author= req.params.author;
     //res.send("hello");
    // console.log(author);
+   getdata();
+   
 
 let contador = 0;
  for (i = 1; i<11; i++){
@@ -89,7 +119,7 @@ let contador = 0;
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
-  
+  getdata();
 
   const isbn = req.params.isbn;
  
@@ -108,7 +138,7 @@ public_users.get('/author/',function (req, res) {
     let author= req.body.author;
     //res.send("hello");
    // console.log(author);
-
+   getdata();
 let contador = 0;
  for (i = 1; i<11; i++){
   
